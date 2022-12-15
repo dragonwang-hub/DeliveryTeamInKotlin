@@ -5,4 +5,8 @@ import deliveryteaminkotlin.members.Member
 import deliveryteaminkotlin.story.Story
 
 @NoArg
-data class Team(var members: List<Member>, var stories: List<Story>)
+data class Team(var members: List<Member>, var stories: List<Story>) {
+  fun getMembers(memberTypeFilter: (Member) -> Boolean): List<Member> {
+    return members.filter(memberTypeFilter)
+  }
+}

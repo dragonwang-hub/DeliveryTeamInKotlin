@@ -39,4 +39,31 @@ internal class TeamTest {
         { assertEquals(StoryStatus.READY, team.stories.get(0).status) }
     )
   }
+
+  @Test
+  fun shouldReturnEligibleMembersBasedOnFilterCondition() {
+//    given team
+    val team = Team::class.java.getDeclaredConstructor().newInstance()
+
+    val memberBA = BA("baOne")
+    val memberBATwo = BA("baTwo")
+    val memberBAThr = BA("baThr")
+    val memberDEV = DEV("devOne")
+    val memberQA = QA("qaOne")
+    val members = listOf(memberBA, memberDEV, memberQA, memberBATwo, memberBAThr)
+
+    team.members = members
+//    when get member according to filter
+    val memberTypeFilter = { member: Member -> member is BA }
+
+    val result = team.getMembers(memberTypeFilter)
+
+//    then team has three member and two story
+    assertAll(
+        { assertEquals(3, result.size) },
+        { assertEquals("baOne", result[0].name) },
+        { assertEquals("baTwo", result[1].name) },
+        { assertEquals("baThr", result[2].name) }
+    )
+  }
 }
