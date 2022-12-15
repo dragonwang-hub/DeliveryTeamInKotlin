@@ -34,9 +34,9 @@ internal class TeamTest {
 
 //    then team has three member and two story
     assertAll(
-        { assertEquals(3, team.members.size) },
-        { assertEquals(2, team.stories.size) },
-        { assertEquals(StoryStatus.READY, team.stories.get(0).status) }
+        { assertEquals(3, team.members!!.size) },
+        { assertEquals(2, team.stories!!.size) },
+        { assertEquals(StoryStatus.READY, team.stories!!.get(0).status) }
     )
   }
 
