@@ -1,7 +1,13 @@
 package deliveryteaminkotlin.members
 
-data class BA(override val name: String): Member() {
+import deliveryteaminkotlin.story.Story
+import kotlin.random.Random
+
+data class BA(override val name: String) : Member() {
   override fun work() {
-    TODO("Not yet implemented")
+    val nextInt = Random.nextInt(1, 4)
+    val stories = team!!.stories!!.toMutableList()
+    IntRange(1, nextInt).forEach { stories.add(Story("randomCard${it}")) }
+    team!!.stories = stories
   }
 }
