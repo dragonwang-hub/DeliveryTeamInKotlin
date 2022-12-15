@@ -5,4 +5,4 @@ import deliveryteaminkotlin.members.Member
 import deliveryteaminkotlin.story.Story
 
 @NoArg
-data class Team(val members: List<Member>, val stories: List<Story>)
+data class Team(var members: List<Member>, var stories: List<Story>)
