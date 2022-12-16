@@ -82,4 +82,27 @@ internal class BATest {
     assertEquals(StoryStatus.DEVELOP, teamTG.stories?.find { it.card == "cardOne" }?.status)
     assertEquals(StoryStatus.DEVELOP, teamTG.stories?.find { it.card == "cardTwo" }?.status)
   }
+
+  @Test
+  fun shouldThrowExceptionWhenAssignCardToABusyDEV() {
+//    given
+    val baOne = BA("baOne")
+    val devOne = DEV("devOne")
+    val storyOne = Story("cardOne", StoryStatus.DEVELOP)
+    devOne.story = storyOne
+
+    val storyTwo = Story("cardTwo")
+    val stories = listOf(storyOne, storyTwo)
+    val members = listOf(baOne, devOne)
+    val teamTG = Team(members, stories)
+    baOne.team = teamTG
+//    when
+    assertThrows(RuntimeException::class.java,
+        { baOne.assignCardToDEV(storyTwo, devOne) },
+        "can't assign card to busy dev")
+
+//    then
+    assertEquals(storyOne, (teamTG.members?.find { it.name == "devOne" } as DEV).story)
+    assertEquals(StoryStatus.READY, teamTG.stories?.find { it.card == "cardTwo" }?.status)
+  }
 }

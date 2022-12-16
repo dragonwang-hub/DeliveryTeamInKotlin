@@ -28,7 +28,10 @@ data class BA(override val name: String) : Member() {
     }
   }
 
-  private fun assignCardToDEV(card: Story, dev: DEV) {
+  fun assignCardToDEV(card: Story, dev: DEV) {
+    if (dev.story != null) {
+      throw RuntimeException("can't assign card to busy dev")
+    }
     dev.story = card
     card.status = StoryStatus.DEVELOP
   }
