@@ -15,7 +15,6 @@ data class QA(override val name: String) : Member() {
           story.status = StoryStatus.DONE
         }
       }
-      it
     }
   }
 
