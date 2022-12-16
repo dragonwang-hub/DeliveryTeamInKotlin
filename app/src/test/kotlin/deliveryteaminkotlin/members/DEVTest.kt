@@ -21,4 +21,16 @@ internal class DEVTest {
 //    the card assigned to dev will to be TEST
     assertEquals(StoryStatus.TEST, devOne.story?.status)
   }
+
+  @Test
+  fun shouldDoNothingWhenDEVDoNotHaveCard() {
+//    given a dev with no story
+    val devOne = DEV("devOne")
+
+//    when dev work
+    devOne.work()
+
+//    the card assigned to dev will to be null and will not have exception
+    assertEquals(null, devOne.story?.status)
+  }
 }

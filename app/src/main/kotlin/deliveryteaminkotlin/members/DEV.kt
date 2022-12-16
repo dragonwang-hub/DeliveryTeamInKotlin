@@ -8,7 +8,8 @@ data class DEV(override val name: String) : Member() {
   var story: Story? = null
 
   override fun work() {
-    story!!.status = StoryStatus.TEST
+    story?.let {
+      it.status = StoryStatus.TEST
+    }
   }
-
 }
