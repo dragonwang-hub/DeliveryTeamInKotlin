@@ -55,4 +55,31 @@ internal class BATest {
     assertEquals(StoryStatus.DEVELOP, teamTG.stories?.find { it.card == "cardOne" }?.status)
     assertEquals(StoryStatus.DEVELOP, teamTG.stories?.find { it.card == "cardTwo" }?.status)
   }
+
+  @Test
+  fun shouldAssignAllReadyCardsToFreeDEVWhenCardsLessThanFreeDEVs() {
+//    given
+    val baOne = BA("baOne")
+    val devOne = DEV("devOne")
+    val devTwo = DEV("devTwo")
+    val devThr = DEV("devOne")
+
+    val teamTG = Team()
+    val storyOne = Story("cardOne")
+    val storyTwo = Story("cardTwo")
+    val stories = listOf(storyOne, storyTwo)
+    val members = listOf(baOne, devOne, devTwo, devThr)
+    teamTG.stories = stories
+    teamTG.members = members
+    baOne.team = teamTG
+//    when
+    baOne.assignReadyCards()
+
+//    then
+    assertNotNull((teamTG.getMembers { member: Member -> member is DEV }.all { (it as DEV).story != null }))
+    assertNotNull((teamTG.members?.find { it.name == "devOne" } as DEV).story)
+    assertNotNull((teamTG.members?.find { it.name == "devTwo" } as DEV).story)
+    assertEquals(StoryStatus.DEVELOP, teamTG.stories?.find { it.card == "cardOne" }?.status)
+    assertEquals(StoryStatus.DEVELOP, teamTG.stories?.find { it.card == "cardTwo" }?.status)
+  }
 }
